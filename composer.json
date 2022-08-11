@@ -1,0 +1,39 @@
+{
+  "name": "elmys/yii2-utils",
+  "description": "Popular utils for work",
+  "keywords": [
+    "yii2",
+    "utils",
+    "elm"
+  ],
+  "homepage": "https://github.com/elmys/utils",
+  "type": "yii2-extension",
+  "license": "GPL-3.0-only",
+  "authors": [
+    {
+      "name": "elmys",
+      "homepage": "https://github.com/elmys"
+    }
+  ],
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://github.com/elmys/utils?state=open",
+    "source": "https://github.com/elmys/utils"
+  },
+  "require": {
+    "php": ">=7.0",
+    "yiisoft/yii2": "*",
+    "phpoffice/phpspreadsheet": "*",
+    "yiisoft/yii2-swiftmailer": "~2.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "elmys\\yii2\\utils\\": ""
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
+  }
+}

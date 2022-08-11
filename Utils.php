@@ -11,6 +11,11 @@ use ZipArchive;
 
 class Utils
 {
+    /**
+     * @param $logFileName
+     * @param $linesArray
+     * @return false|int
+     */
     public static function logToDisk($logFileName, $linesArray)
     {
         $dir = Yii::getAlias('@runtime');
@@ -30,6 +35,10 @@ class Utils
         return $contents;
     }
 
+    /**
+     * @param $number
+     * @return array|false|string|string[]
+     */
     public static function phoneNumCleaned($number)
     {
         if (!empty($number)) {
@@ -40,6 +49,9 @@ class Utils
         }
     }
 
+    /**
+     * @return string
+     */
     public static function getGUID()
     {
         if (function_exists('com_create_guid')) {
@@ -59,6 +71,10 @@ class Utils
         }
     }
 
+    /**
+     * @param $dir
+     * @return bool|null
+     */
     public static function is_dir_empty($dir)
     {
         if (!is_readable($dir)) {
@@ -82,6 +98,12 @@ class Utils
         return $str;
     }
 
+    /**
+     * @param $filename
+     * @param $startRow
+     * @param $delimiter
+     * @return array|array[]|false
+     */
     public static function csv2array($filename = '', $startRow = 1, $delimiter = ';')
     {
         if (!file_exists($filename) || !is_readable($filename)) {
@@ -99,6 +121,11 @@ class Utils
         return array_map($func, $lines);
     }
 
+    /**
+     * @param $to
+     * @param array $params
+     * @return false|void|yii\mail\MessageInterface
+     */
     public static function sendOne($to, array $params)
     {
         if (empty($params))
@@ -130,6 +157,15 @@ class Utils
         }
     }
 
+    /**
+     * @param $excel
+     * @param $name
+     * @param $recieveMail
+     * @param $mimes
+     * @return void|yii\console\Response|yii\web\Response
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws yii\web\RangeNotSatisfiableHttpException
+     */
     public static function phpExcelSaver($excel, $name, $recieveMail = '', $mimes = ['xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])
     {
         $excelWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($excel, 'Xlsx');
@@ -153,6 +189,14 @@ class Utils
         }
     }
 
+    /**
+     * @param $name
+     * @param $path
+     * @param $removeDir
+     * @param $password
+     * @return false|void
+     * @throws yii\base\ErrorException
+     */
     public static function createZipFromDir($name, $path, $removeDir = false, $password = null)
     {
         $zip_name = $name . '.zip';

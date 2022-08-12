@@ -8,6 +8,9 @@ use yii\base\Exception;
 use yii\helpers\FileHelper;
 use yii\helpers\StringHelper;
 use ZipArchive;
+use DateTime;
+use DateInterval;
+use DatePeriod;
 
 class Utils
 {
@@ -422,5 +425,54 @@ class Utils
             'Я' => 'YA'
         ];
         return strtr($str, $gostSymbols);
+    }
+
+    public static function countTimeLeft($targetTimeStamp, $calcNewDate = false, $simpleCalcDays = null, $holydaysByYear = [2022 => [1 => [1, 2, 3, 4, 5, 6, 7, 8]]])
+    {
+        date_default_timezone_set('Europe/Moscow');
+        $origin = new DateTime();
+        $target = new DateTime();
+        $origin->setTimezone(date_default_timezone_get());
+        $target->setTimezone(date_default_timezone_get());
+
+        $origin->modify('@' . time());
+        $target->modify('@' . $targetTimeStamp);
+        $ar = [];
+        if ($origin <= $target) {
+            if (!$simpleCalcDays) {
+                $additionalDays = 0;
+                $interval = new DateInterval('PT3H'); // для учёта последнего дня периода, иначе он не попадёт в выборку при P1D
+                $daterange = new DatePeriod($origin, $interval, $target);
+
+                foreach ($daterange as $date) {
+                    $ar [] = $date->format('Y-m-d');
+                }
+
+                $holydaysSuite = $holydaysByYear;
+                foreach (array_unique($ar) as $dayPeriod) {
+                    $fDate = explode('-', $dayPeriod);
+                    $holydays = $holydaysSuite[$fDate[0]] ?? end($holydaysSuite);
+
+                    // пересечение праздников
+                    if (isset($holydays[(int)$fDate[1]]) && in_array((int)$fDate[2], $holydays[(int)$fDate[1]])) {
+                        $additionalDays++;
+                    }
+                    // пересечение выходных
+                    if (self::isWeekendsDay($dayPeriod)) {
+                        $additionalDays++;
+                    }
+                }
+            }
+            $target->modify('+' . $additionalDays . ' day');
+            $diff = $origin->diff($target);
+        } else {
+            $diff = new \DateInterval('PT0H0M');
+        }
+        return $calcNewDate ? $target : ($origin <= $target ? $diff->format('%d дня %H ч. %I мин.') : '-- : --');
+    }
+
+    public static function isWeekendsDay($date)
+    {
+        return in_array(date("N", strtotime($date)), [6, 7]);
     }
 }

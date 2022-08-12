@@ -15,7 +15,7 @@
       "homepage": "https://github.com/elmys"
     }
   ],
-  "minimum-stability": "dev",
+  "minimum-stability": "RC",
   "support": {
     "issues": "https://github.com/elmys/utils?state=open",
     "source": "https://github.com/elmys/utils"

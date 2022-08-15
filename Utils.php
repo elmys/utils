@@ -475,5 +475,4 @@ class Utils
     {
         return in_array(date("N", strtotime($date)), [6, 7]);
     }
-
 }

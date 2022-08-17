@@ -1,6 +1,8 @@
 <?php
 namespace elmys\yii2\utils\ShareVideoLink;
 
+ use elmys\yii2\utils\ShareVideoLink\components\products\facebook\FacebookCreator;
+ use elmys\yii2\utils\ShareVideoLink\components\products\vimeo\VimeoCreator;
  use yii\db\Exception;
  use yii\helpers\Html;
  use elmys\yii2\utils\ShareVideoLink\components\products\youtube\YouTubeCreator;
@@ -23,6 +25,8 @@ namespace elmys\yii2\utils\ShareVideoLink;
              return new VkCreator($link);
          } elseif (mb_strpos($link, 'rutube') !== false) {
              return new RutubeCreator($link);
+         } elseif (mb_strpos($link, 'vimeo') !== false) {
+             return new VimeoCreator($link);
          }else{
              throw new \Exception('Video host not recognized');
          }

@@ -1,10 +1,11 @@
 <?php
-namespace elmys\yii2\utils\ShareVideoLink;
+namespace elmys\yii2\utils;
 
  use elmys\yii2\utils\ShareVideoLink\components\products\vimeo\VimeoCreator;
  use elmys\yii2\utils\ShareVideoLink\components\products\youtube\YouTubeCreator;
  use elmys\yii2\utils\ShareVideoLink\components\products\rutube\RutubeCreator;
  use elmys\yii2\utils\ShareVideoLink\components\products\vk\VkCreator;
+ use elmys\yii2\utils\ShareVideoLink\Creator;
 
  class VideoAgregator
  {

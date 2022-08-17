@@ -23,11 +23,7 @@ Usage
 -
 
 ```php
-namespace elmys\yii2\utils;
-
-use elmys\yii2\utils\ShareVideoLink\VideoAgregator;
-
-require_once __DIR__ . '/vendor/autoload.php';
+use elmys\yii2\utils\VideoAgregator;
 
 echo VideoAgregator::iframe('https://www.youtube.com/watch?v=bWLEFKiLBG4');
 echo VideoAgregator::iframe('https://rutube.ru/video/8a6d5fe35ecd2b8aad48705eb76ef992');

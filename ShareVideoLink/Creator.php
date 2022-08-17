@@ -2,23 +2,44 @@
 namespace elmys\yii2\utils\ShareVideoLink;
 
 use elmys\yii2\utils\ShareVideoLink\components\Product;
+use elmys\yii2\utils\ShareVideoLink\components\products\rutube\RutubeProduct;
+use elmys\yii2\utils\ShareVideoLink\components\products\vk\VkProduct;
+use elmys\yii2\utils\ShareVideoLink\components\products\youtube\YouTubeProduct;
+use yii\helpers\StringHelper;
 
 abstract class Creator
 {
+    public static $templates = [
+        'YouTubeCreator' => YouTubeProduct::TEMPLATE,
+        'RutubeCreator' => RutubeProduct::TEMPLATE,
+        'VkCreator' => VkProduct::TEMPLATE,
+    ];
+    public $url;
+    public $platformCreator;
+
     abstract public function getSocialProduct(): Product;
 
-/*    public function someOperation(): string
+    public function getVideoId(): string
     {
-        $product = $this->factoryMethod();
-        return $product->operation();
-    }*/
+        if ($pattern = self::$templates[$this->platformCreator]) {
+            foreach ($pattern['masks'] as $mask) {
+                preg_match($mask, $this->url, $matches);
+                if (count($matches) > 1) {
+                    return $matches[1];
+                }
+            }
+        }
+        return '';
+    }
 
-    public function postVideo($url): string
+    public function getVideoCode(): string
     {
-        // Вызываем фабричный метод для создания объекта Продукта...
+        return str_replace("%videoId%", $this->getVideoId(), self::$templates[$this->platformCreator]['code']);
+    }
+
+    public function postVideo(): string
+    {
         $product = $this->getSocialProduct();
-
-        // ...а затем используем его по своему усмотрению.
-        return $product->generateIframeCode($url);
+        return $product->generateIframeCode($this->getVideoCode());
     }
 }

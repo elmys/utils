@@ -477,6 +477,8 @@ class Utils
     }
 
     /**
+     * Генератор пин-кода
+     *
      * @param $digitsCount
      * @return string
      */

@@ -475,4 +475,20 @@ class Utils
     {
         return in_array(date("N", strtotime($date)), [6, 7]);
     }
+
+    /**
+     * @param $digitsCount
+     * @return string
+     */
+    public static function generatePin($digitsCount = 4) :string
+    {
+        $i = 0; //counter
+        $pin = ""; //our default pin is blank.
+        while($i < $digitsCount){
+            //generate a random number between 0 and 9.
+            $pin .= mt_rand(0, 9);
+            $i++;
+        }
+        return $pin;
+    }
 }
